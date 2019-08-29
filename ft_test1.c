@@ -6,7 +6,7 @@
 /*   By: nmncube <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 16:51:19 by nmncube           #+#    #+#             */
-/*   Updated: 2019/08/28 17:03:07 by nmncube          ###   ########.fr       */
+/*   Updated: 2019/08/29 15:31:17 by nmncube          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -41,7 +41,7 @@ void	ft_display(int bfound,struct here *flags,char *s1)
 {
 	printf("%d\n" , bfound);
 	if (ft_strcmp(s1, "ls") == 0
-			&& (flags->l !=  1 && flags->a != 1 && flags->t != 1 && flags->r != 1 && flags->R != 1))
+			&& (flags->l !=  1 && flags->a != 1 && flags->t != 1 && flags->r != 1 && flags->R != 1) && bfound <=0)
 		printf("Normal display");
 	else
 		if (bfound > 0 || (flags->l !=  1 && flags->a != 1 && flags->t != 1))
@@ -70,6 +70,8 @@ int ft_check(char c1,char c2 , struct here *flags)
 				return(1);
 	return (0);
 }
+//Issue with --
+//Issue with -a-a- --
 //Issue with ls - 
 int main(int argc,char **argv)
 {
@@ -78,29 +80,23 @@ int main(int argc,char **argv)
 	static int bfound;
 	struct here *owner;
 
-	owner = (struct here*)malloc(sizeof(struct here));
 	k = 2;
+	owner = (struct here*)malloc(sizeof(struct here));
 	while(argc > 2 && argv[1][0] == 'l' && argv[1][1] == 's')
 	{
 		j = 1;
+		if (argv[k][0] == '-' && argv[k][j] == 0)
+			bfound =1;
 		while (argv[k][j] != '\0')
 		{
-			/*if ( argv[k][0] == '-' && argv[k][j] == 'a')
-				owner->a = 1;
-			else
-				if (argv[k][0] == '-' && argv[k][j] == 'l')
-					owner->l = 1;
-			else
-				if (argv[k][0] == '-' && argv[k][j] == 't')
-					owner->t = 1;
-			else
-				bfound = bfound + 1;*/
 			bfound = bfound + ft_check(argv[k][0] , argv[k][j] , owner);
 			j++;
 		}
 		argc--;
 		k++;
 	}
+	if (argv[2] && argv[2][0] == '-' && argv[2][1] == '-' && bfound == 1)
+		bfound = 0; 
 	ft_display(bfound, owner,argv[1]);
 	return (0);
 }
