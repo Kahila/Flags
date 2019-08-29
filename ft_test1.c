@@ -6,7 +6,7 @@
 /*   By: nmncube <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 16:51:19 by nmncube           #+#    #+#             */
-/*   Updated: 2019/08/29 15:31:17 by nmncube          ###   ########.fr       */
+/*   Updated: 2019/08/29 16:20:14 by nmncube          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -85,8 +85,8 @@ int main(int argc,char **argv)
 	while(argc > 2 && argv[1][0] == 'l' && argv[1][1] == 's')
 	{
 		j = 1;
-		if (argv[k][0] == '-' && argv[k][j] == 0)
-			bfound =1;
+		if ((argv[k][0] == '-' && argv[k][j] == 0) || argv[k][0] != '-')
+				bfound = bfound + 1;
 		while (argv[k][j] != '\0')
 		{
 			bfound = bfound + ft_check(argv[k][0] , argv[k][j] , owner);
