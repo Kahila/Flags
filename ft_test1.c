@@ -6,7 +6,7 @@
 /*   By: nmncube <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 16:51:19 by nmncube           #+#    #+#             */
-/*   Updated: 2019/08/29 16:20:14 by nmncube          ###   ########.fr       */
+/*   Updated: 2019/08/30 11:25:44 by nmncube          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -21,33 +21,38 @@ typedef struct here
 	int R;
 }flags;
 
-void ft_output(struct here *flags)
+void ft_output(int bfound ,struct here *flags)
 {
+	if (flags->R == 1)
+		printf("-R actived\n");
 	if (flags->a == 1)
 		printf("-a activated \n");
 	if (flags->t == 1)
 		printf("-t activated\n");
-	if (flags->l == 1)
-		printf("-l view Display\n");
 	if (flags->r == 1)
 		printf("-r activated\n");
-	if (flags->R == 1)
-		printf("-R actived\n");
-	if (flags->l != 1)
-		printf("Display in standard output");
+	if (flags->l == 1)
+		printf("-l view Display\n");
+	if (flags->l != 1 || bfound == -1)
+		printf("-Display in standard output");
 }
 
 void	ft_display(int bfound,struct here *flags,char *s1)
 {
 	printf("%d\n" , bfound);
-	if (ft_strcmp(s1, "ls") == 0
-			&& (flags->l !=  1 && flags->a != 1 && flags->t != 1 && flags->r != 1 && flags->R != 1) && bfound <=0)
-		printf("Normal display");
-	else
-		if (bfound > 0 || (flags->l !=  1 && flags->a != 1 && flags->t != 1))
-			printf("Issue");
+	if (ft_strcmp(s1, "ls") == 0 && bfound == 0)
+	{
+		if (flags->l == 1)
+			bfound = 0;
 		else
-			ft_output(flags);
+			bfound = -1;
+	}
+	else
+		bfound = 1;	
+	if (bfound > 0)
+		printf("Issue");
+	else
+		ft_output(bfound,flags);
 }
 
 int ft_check(char c1,char c2 , struct here *flags)
@@ -70,6 +75,7 @@ int ft_check(char c1,char c2 , struct here *flags)
 				return(1);
 	return (0);
 }
+//Issue with l s
 //Issue with --
 //Issue with -a-a- --
 //Issue with ls - 
@@ -81,6 +87,8 @@ int main(int argc,char **argv)
 	struct here *owner;
 
 	k = 2;
+	if (!argv[1])//Seg issue if no input used
+		return (0);//Seg issue
 	owner = (struct here*)malloc(sizeof(struct here));
 	while(argc > 2 && argv[1][0] == 'l' && argv[1][1] == 's')
 	{
