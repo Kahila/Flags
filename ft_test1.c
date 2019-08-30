@@ -6,7 +6,7 @@
 /*   By: nmncube <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 16:51:19 by nmncube           #+#    #+#             */
-/*   Updated: 2019/08/30 11:25:44 by nmncube          ###   ########.fr       */
+/*   Updated: 2019/08/30 13:36:08 by nmncube          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -37,10 +37,10 @@ void ft_output(int bfound ,struct here *flags)
 		printf("-Display in standard output");
 }
 
-void	ft_display(int bfound,struct here *flags,char *s1)
+void	ft_display(int bfound,struct here *flags)
 {
 	printf("%d\n" , bfound);
-	if (ft_strcmp(s1, "ls") == 0 && bfound == 0)
+	if (bfound == 0)
 	{
 		if (flags->l == 1)
 			bfound = 0;
@@ -86,11 +86,9 @@ int main(int argc,char **argv)
 	static int bfound;
 	struct here *owner;
 
-	k = 2;
-	if (!argv[1])//Seg issue if no input used
-		return (0);//Seg issue
+	k = 1;
 	owner = (struct here*)malloc(sizeof(struct here));
-	while(argc > 2 && argv[1][0] == 'l' && argv[1][1] == 's')
+	while(argc > 1)
 	{
 		j = 1;
 		if ((argv[k][0] == '-' && argv[k][j] == 0) || argv[k][0] != '-')
@@ -103,8 +101,8 @@ int main(int argc,char **argv)
 		argc--;
 		k++;
 	}
-	if (argv[2] && argv[2][0] == '-' && argv[2][1] == '-' && bfound == 1)
+	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '-' && bfound == 1)
 		bfound = 0; 
-	ft_display(bfound, owner,argv[1]);
+	ft_display(bfound, owner);
 	return (0);
 }
