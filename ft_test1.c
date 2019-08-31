@@ -34,7 +34,7 @@ void ft_output(int bfound ,struct here *flags)
 	if (flags->l == 1)
 		printf("-l view Display\n");
 	if (flags->l != 1 || bfound == -1)
-		printf("-Display in standard output");
+		printf("-Display in standard output\n");
 }
 
 void	ft_display(int bfound,struct here *flags)
@@ -50,7 +50,7 @@ void	ft_display(int bfound,struct here *flags)
 	else
 		bfound = 1;	
 	if (bfound > 0)
-		printf("Issue");
+		printf("Issue\n");
 	else
 		ft_output(bfound,flags);
 }
@@ -104,5 +104,6 @@ int main(int argc,char **argv)
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '-' && bfound == 1)
 		bfound = 0; 
 	ft_display(bfound, owner);
+	free(owner);
 	return (0);
 }
